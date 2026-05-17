@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahil Shah | Software Engineer</title>
+    <meta name="description" content="Portfolio of Sahil Shah, Software Engineer and ML Enthusiast.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --black: #000000;
+            --white: #F5F5F5;
+            --blood: #8B0000;
+            --mid: #111111;
+            --dim: #1A1A1A;
+            --ghost: rgba(245, 245, 245, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .bebas {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.05em;
+            font-weight: normal;
+        }
+
+        a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Cursor */
+        #cursor-dot {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background-color: var(--white);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor-ring {
+            position: fixed;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--white);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        body.cursor-hover #cursor-ring {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        body.cursor-hover #cursor-dot {
+            opacity: 0;
+        }
+
+        body.cursor-down #cursor-ring {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* 3D Background */
+        #bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transition: backdrop-filter 0.3s, border-bottom 0.3s, background-color 0.3s;
+            background: transparent;
+        }
+
+        nav.scrolled {
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+        }
+
+        /* Sections */
+        .section {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            width: 100%;
+            padding: 80px 7%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.65);
+        }
+
+        #hero {
+            background: transparent;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+
+        /* Hero */
+        .hero-title {
+            font-size: clamp(80px, 12vw, 160px);
+            line-height: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .hero-title .char {
+            display: inline-block;
+        }
+
+        .hero-subtitle {
+            font-size: 13px;
+            font-weight: 300;
+            max-width: 520px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+            letter-spacing: 0.04em;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border: 1px solid var(--white);
+            background: transparent;
+            color: var(--white);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+        }
+
+        .cta-btn:hover {
+            background: var(--white);
+            color: var(--black);
+            transform: scale(1.05);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: var(--white);
+            animation: scrollDown 2s infinite ease-in-out;
+        }
+
+        @keyframes scrollDown {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            50% {
+                transform: translateY(100%);
+            }
+
+            100% {
+                transform: translateY(200%);
+            }
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 55% 45%;
+            gap: 30px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 48px;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .section-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            color: var(--blood);
+
+            display: block;
+        }
+
+        .about-text {
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.65;
+            margin-bottom: 14px;
+        }
+
+        .about-text.split-words {
+            word-spacing: 0.25em;
+        }
+
+
+        .about-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .stat-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 56px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 3px;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .skill-card {
+            background: var(--ghost);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 22px 18px;
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+        }
+
+        .skill-card:hover {
+            transform: perspective(600px) rotateX(-8deg) rotateY(5deg) translateY(-4px);
+        }
+
+        .skill-category {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 20px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            font-size: 13px;
+            font-weight: 400;
+            padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        .skills-grid .skill-card:nth-child(5) {
+            grid-column: span 2;
+        }
+
+        /* Internship */
+        .intern-block {
+            max-width: 700px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .intern-block .section-title {
+            text-align: center;
+        }
+
+        .glitch-line {
+            width: 100%;
+            height: 1px;
+            background: var(--white);
+            margin: 20px 0;
+            transform-origin: left;
+        }
+
+        .intern-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .intern-role {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            letter-spacing: 2px;
+        }
+
+        .intern-company {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .intern-date {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .intern-desc {
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .intern-stack {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 30px;
+        }
+
+        /* Projects */
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            padding: 28px 32px;
+            position: relative;
+            background: transparent;
+            transition: background 0.3s, border-color 0.3s;
+            border-left: 2px solid transparent;
+        }
+
+        .project-card:hover {
+            border-left: 2px solid var(--blood);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .project-card:nth-child(even) {
+            align-items: flex-end;
+            text-align: right;
+            border-left: none;
+            border-right: 2px solid transparent;
+        }
+
+        .project-card:nth-child(even):hover {
+            border-right: 2px solid var(--blood);
+        }
+
+        .card-border {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1px;
+            width: 0%;
+            background: var(--white);
+        }
+
+        .project-card:nth-child(even) .card-border {
+            left: auto;
+            right: 0;
+        }
+
+        .project-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 120px;
+            color: var(--ghost);
+            line-height: 0.8;
+            position: absolute;
+            top: 10px;
+            z-index: -1;
+        }
+
+        .project-card:nth-child(even) .project-num {
+            right: 20px;
+        }
+
+        .project-card:nth-child(odd) .project-num {
+            left: 20px;
+        }
+
+        .project-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        .project-card:nth-child(even) .project-tags {
+            justify-content: flex-end;
+        }
+
+        .project-tags span {
+            padding: 2px 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        .project-desc {
+            font-weight: 300;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            max-width: 600px;
+        }
+
+        .project-achieve {
+            color: var(--blood);
+            font-weight: 400;
+            font-size: 12px;
+            margin-bottom: 14px;
+            max-width: 600px;
+        }
+
+        .project-link {
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .project-link span {
+            transition: transform 0.2s;
+        }
+
+        .project-link:hover span {
+            transform: translateX(5px);
+        }
+
+        /* Achievements */
+        .achievements-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .achieve-hero {
+            text-align: center;
+        }
+
+        .achieve-winner {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 56px;
+            color: var(--white);
+            text-shadow: 0 0 40px var(--blood);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 14px;
+            line-height: 1;
+        }
+
+        .diamond {
+            font-size: 60px;
+            color: var(--white);
+            text-shadow: none;
+        }
+
+        .achieve-hero-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+
+        .achieve-hero-desc {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .achieve-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--dim);
+        }
+
+        .achieve-secondary {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 50px;
+        }
+
+        .achieve-sec-title {
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .achieve-sec-desc {
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            min-height: 50vh !important;
+            text-align: center;
+            justify-content: flex-end;
+            padding-bottom: 50px;
+            background: transparent !important;
+        }
+
+        .footer-title {
+            font-size: 48px;
+            margin-bottom: 28px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        .footer-link {
+            font-size: 18px;
+            font-weight: 300;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-link span {
+            transition: transform 0.2s;
+            opacity: 0;
+        }
+
+        .footer-link:hover span {
+            transform: translateX(5px);
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--dim);
+            padding-top: 20px;
+            font-size: 12px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0) scaleY(1);
+                opacity: 1;
+            }
+
+            20% {
+                transform: translate(-5px, 2px) scaleY(1.5);
+                opacity: 0.8;
+            }
+
+            40% {
+                transform: translate(5px, -2px) scaleY(0.5);
+                opacity: 0.9;
+            }
+
+            60% {
+                transform: translate(-2px, 5px) scaleY(2);
+                opacity: 0.8;
+            }
+
+            80% {
+                transform: translate(2px, -5px) scaleY(0.5);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: translate(0) scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        .glitch-anim {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            #bg {
+                display: none !important;
+            }
+
+            body {
+                background-color: var(--black);
+                cursor: auto !important;
+            }
+
+            * {
+                cursor: auto !important;
+            }
+
+            #cursor-dot,
+            #cursor-ring {
+                display: none !important;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            nav {
+                padding: 20px 5%;
+                justify-content: center;
+            }
+
+            .about-grid,
+            .skills-grid,
+            .achieve-secondary {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid .skill-card:nth-child(5) {
+                grid-column: span 1;
+            }
+
+
+
+            .project-num {
+                font-size: 80px;
+            }
+
+            .hero-title {
+                font-size: 80px;
+            }
+
+            .achieve-winner {
+                font-size: 40px;
+                flex-direction: column;
+            }
+
+            .diamond {
+                font-size: 40px;
+            }
+
+            .section {
+                background: var(--black);
+                padding: 80px 5%;
+                min-height: auto;
+            }
+
+            #hero {
+                min-height: 100vh;
+            }
+
+            footer {
+                min-height: auto !important;
+                padding-top: 80px;
+            }
+
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="bg"></canvas>
+    <div id="cursor-dot"></div>
+
+    <nav>
+        <div class="logo">SAHIL SHAH</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section id="hero" class="section">
+        <div class="section-content">
+            <h1 class="hero-title bebas">
+                <span class="word">
+                    <span class="char">S</span><span class="char">A</span><span class="char">H</span><span
+                        class="char">I</span><span class="char">L</span>
+                </span>
+                <br />
+                <span class="word">
+                    <span class="char">S</span><span class="char">H</span><span class="char">A</span><span
+                        class="char">H</span>
+                </span>
+            </h1>
+            <p class="hero-subtitle">Software Engineering &middot; VIT Vellore &middot; ML Engineer<br />Building ML
+                pipelines, full-stack tools, and AI-powered apps &mdash; one project at a time.</p>
+            <a href="#projects" class="cta-btn">VIEW MY WORK &darr;</a>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="section-content about-grid">
+            <div class="about-left">
+                <h2 class="section-title bebas">ABOUT ME</h2>
+                <span class="section-sub">Who I Am</span>
+                <p class="about-text split-words">
+                    Started coding not because of a plan — because of curiosity.
+                    First year at VIT Vellore doing B.Tech + M.Tech in Software
+                    Engineering, and I've already shipped more than most do in four.
+                </p>
+                <p class="about-text split-words">
+                    Interned at 1stop.ai building production ML pipelines from scratch.
+                    Won the Relifer Hackathon with an AI heart attack prevention app.
+                    Hit 4–5 hackathons in year one — not to participate, but to win.
+                </p>
+
+
+            </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div style="text-align:center; margin-bottom: 32px; position:relative; z-index:1;">
+            <h2 class="section-title bebas">SKILLS</h2>
+            <span class="section-sub">Technologies & Tools</span>
+        </div>
+        <div class="section-content skills-grid">
+            <div class="skill-card">
+                <div class="skill-category">LANGUAGES</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">C++</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag">CSS</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">ML & DATA</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">scikit-learn</span>
+                    <span class="skill-tag">LightGBM</span>
+                    <span class="skill-tag">Pandas</span>
+                    <span class="skill-tag">NumPy</span>
+                    <span class="skill-tag">Matplotlib</span>
+                    <span class="skill-tag">Seaborn</span>
+                    <span class="skill-tag">NLTK</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">WEB & BACKEND</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Django</span>
+                    <span class="skill-tag">Supabase</span>
+                    <span class="skill-tag">n8n</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">TOOLS</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">GitHub</span>
+                    <span class="skill-tag">Jupyter Notebook</span>
+                    <span class="skill-tag">VS Code</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-category">CONCEPTS</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">Feature Engineering</span>
+                    <span class="skill-tag">EDA</span>
+                    <span class="skill-tag">NLP</span>
+                    <span class="skill-tag">Regression</span>
+                    <span class="skill-tag">Classification</span>
+                    <span class="skill-tag">Boosting</span>
+                    <span class="skill-tag">Cross-Validation</span>
+                    <span class="skill-tag">Full-Stack Development</span>
+                    <span class="skill-tag">Backend</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="internship" class="section">
+        <div class="section-content intern-block">
+            <h2 class="section-title bebas">EXPERIENCE</h2>
+            <span class="section-sub">Where I've Worked</span>
+            <div class="glitch-line"></div>
+            <div class="intern-header">
+                <div>
+                    <div class="intern-role">MACHINE LEARNING INTERN</div>
+                    <div class="intern-company">1stop.ai</div>
+                </div>
+                <div class="intern-date">Feb 2026 &ndash; Apr 2026</div>
+            </div>
+            <p class="intern-desc">Built and evaluated supervised ML models (regression + classification) for real-world
+                datasets as part of a structured production pipeline.</p>
+            <p class="intern-desc">Handled end-to-end data preprocessing, feature engineering, and model selection
+                independently &mdash; from raw data ingestion to performance reporting.</p>
+            <p class="intern-desc">Delivered production-ready models with measurable accuracy improvements. Recognized
+                by the organization as dedicated and diligent.</p>
+            <p class="intern-stack">STACK: Python &middot; scikit-learn &middot; Pandas &middot; Feature Engineering
+                &middot; EDA</p>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div style="text-align:left; margin-bottom: 28px; padding: 0 0;">
+            <h2 class="section-title bebas">PROJECTS</h2>
+            <span class="section-sub">Things I've Built</span>
+        </div>
+        <div class="section-content projects-container">
+
+            <div class="project-card">
+                <div class="project-num">01</div>
+                <h3 class="project-title bebas">FINSIGHT.AI</h3>
+                <div class="project-tags">
+                    <span>HTML</span><span>CSS</span><span>JavaScript</span><span>n8n</span><span>Supabase</span>
+                </div>
+                <p class="project-desc">Full-stack AI web app for uploading and analyzing financial documents &mdash;
+                    invoices, receipts, and reports &mdash; with AI-generated structured insights.</p>
+                <p class="project-achieve">&rarr; End-to-end pipeline: Supabase auth + storage, n8n backend automation,
+                    real-time status updates. The only full-stack AI project in this portfolio.</p>
+                <a href="https://github.com/IGLTrevo0/FinSight.Ai" target="_blank" class="project-link">GitHub
+                    <span>&rarr;</span></a>
+                <div class="card-border"></div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-num">02</div>
+                <h3 class="project-title bebas">NUMBER OF ORDER PREDICTION</h3>
+                <div class="project-tags">
+                    <span>Python</span><span>LightGBM</span><span>scikit-learn</span><span>Pandas</span>
+                </div>
+                <p class="project-desc">Regression pipeline predicting daily sales order volume across 365 retail stores
+                    from 188,340 records &mdash; store type, region, location, discount, and sales as features.</p>
+                <p class="project-achieve">&rarr; 95.96% R&sup2; with LightGBM vs. 92.57% Random Forest baseline &mdash;
+                    3.4-point improvement.</p>
+                <a href="https://github.com/IGLTrevo0/Number-of-Order-Prediction" target="_blank"
+                    class="project-link">GitHub <span>&rarr;</span></a>
+                <div class="card-border"></div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-num">03</div>
+                <h3 class="project-title bebas">HUMAN ACTION DETECTION</h3>
+                <div class="project-tags">
+                    <span>Python</span><span>scikit-learn</span><span>RobustScaler</span>
+                </div>
+                <p class="project-desc">Multiclass classifier for 12 physical activities from MHEALTH wearable sensor
+                    time-series data. Handles class imbalance via downsampling.</p>
+                <p class="project-achieve">&rarr; Benchmarked Logistic Regression, KNN, Random Forest, SVM &mdash;
+                    evaluated on precision, recall, and F1-score.</p>
+                <a href="https://github.com/IGLTrevo0/Human-Actoin-Detection" target="_blank"
+                    class="project-link">GitHub <span>&rarr;</span></a>
+                <div class="card-border"></div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-num">04</div>
+                <h3 class="project-title bebas">COVID-19 PANDEMIC SENTIMENT ANALYSIS</h3>
+                <div class="project-tags">
+                    <span>Python</span><span>NLTK</span><span>TF-IDF</span><span>scikit-learn</span>
+                </div>
+                <p class="project-desc">NLP pipeline classifying 119,800 pandemic tweets as Positive, Negative, or
+                    Neutral.</p>
+                <p class="project-achieve">&rarr; 500 TF-IDF features extracted; best classifier selected on weighted F1
+                    across an imbalanced real-world dataset.</p>
+                <a href="https://github.com/IGLTrevo0/Pandamic_Sentiment_Analysis" target="_blank"
+                    class="project-link">GitHub <span>&rarr;</span></a>
+                <div class="card-border"></div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-num">05</div>
+                <h3 class="project-title bebas">BIKE SHARING DEMAND PREDICTION</h3>
+                <div class="project-tags">
+                    <span>Python</span><span>scikit-learn</span>
+                </div>
+                <p class="project-desc">Regression model predicting bike rental demand based on weather, season, and
+                    time-of-day features.</p>
+                <a href="https://github.com/IGLTrevo0/Bike-Sharing-Demand-Prediction" target="_blank"
+                    class="project-link">GitHub <span>&rarr;</span></a>
+                <div class="card-border"></div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-num">06</div>
+                <h3 class="project-title bebas">DIABETES PREDICTOR</h3>
+                <div class="project-tags">
+                    <span>Python</span><span>scikit-learn</span>
+                </div>
+                <p class="project-desc">Binary classification model predicting diabetes likelihood from patient health
+                    metrics.</p>
+                <a href="https://github.com/IGLTrevo0/Diabetes-Predictor" target="_blank" class="project-link">GitHub
+                    <span>&rarr;</span></a>
+                <div class="card-border"></div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-num">07</div>
+                <h3 class="project-title bebas">PITCHDESK</h3>
+                <div class="project-tags">
+                    <span>Python</span><span>React</span><span>AI</span>
+                </div>
+                <p class="project-desc">AI-powered presentation builder optimizing pitch decks with data-driven
+                    narratives.</p>
+                <a href="https://github.com/IGLTrevo0/PitchDesk" target="_blank" class="project-link">GitHub
+                    <span>&rarr;</span></a>
+                <div class="card-border"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="achievements" class="section">
+        <div style="text-align:center; margin-bottom: 32px;">
+            <h2 class="section-title bebas">ACHIEVEMENTS</h2>
+            <span class="section-sub">Recognition & Community</span>
+        </div>
+        <div class="section-content achievements-grid">
+            <div class="achieve-hero">
+                <div class="achieve-winner"><span class="diamond">&diams;</span> WINNER</div>
+                <h3 class="achieve-hero-title bebas">RELIFER HACKATHON</h3>
+                <p class="achieve-hero-desc">Built an AI-powered heart attack prevention app with early risk detection
+                    using patient health data. Shipped a full working product under hackathon time pressure.</p>
+            </div>
+            <div class="achieve-divider"></div>
+            <div class="achieve-secondary">
+                <div>
+                    <h4 class="achieve-sec-title">HACKATHON PARTICIPANT</h4>
+                    <p class="achieve-sec-desc">4&ndash;5 hackathons in year one of college.<br />Consistently shipped
+                        functional, end-to-end products under time constraints.</p>
+                </div>
+                <div>
+                    <h4 class="achieve-sec-title">MEMBER &mdash; FIREFOX CLUB, VIT VELLORE</h4>
+                    <p class="achieve-sec-desc">Technical club &mdash; building projects, exploring emerging tech,
+                        peer-driven learning.</p>
+                </div>
+                <div>
+                    <h4 class="achieve-sec-title">MEMBER &mdash; GAMING CLUB, VIT VELLORE</h4>
+                    <p class="achieve-sec-desc">College gaming community &mdash; competitive gaming, esports events, and
+                        team building.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="section">
+        <div class="section-content">
+            <h2 class="footer-title bebas">LET'S CONNECT</h2>
+            <div class="footer-links">
+                <a href="mailto:sahilshahs7193@gmail.com" class="footer-link">sahilshahs7193@gmail.com
+                    <span>&rarr;</span></a>
+                <a href="https://github.com/IGLTrevo0" target="_blank" class="footer-link">github.com/IGLTrevo0
+                    <span>&rarr;</span></a>
+                <a href="#" class="footer-link">+91-8624080979 <span>&rarr;</span></a>
+            </div>
+            <div class="footer-bottom">
+                Built by Sahil Shah &middot; 2026
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        const isMobile = window.innerWidth < 768;
+
+        // Custom Cursor
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+
+        if (!isMobile) {
+            let cursorX = window.innerWidth / 2;
+            let cursorY = window.innerHeight / 2;
+            let ringX = cursorX;
+            let ringY = cursorY;
+
+            document.addEventListener('mousemove', (e) => {
+                cursorX = e.clientX;
+                cursorY = e.clientY;
+
+                if (cursorDot) {
+                    cursorDot.style.left = cursorX + 'px';
+                    cursorDot.style.top = cursorY + 'px';
+                }
+
+                // Trail
+                const trail = document.createElement('div');
+                trail.style.position = 'fixed';
+                trail.style.left = cursorX + 'px';
+                trail.style.top = cursorY + 'px';
+                trail.style.width = '4px';
+                trail.style.height = '4px';
+                trail.style.backgroundColor = 'var(--white)';
+                trail.style.borderRadius = '50%';
+                trail.style.pointerEvents = 'none';
+                trail.style.zIndex = '9998';
+                trail.style.transform = 'translate(-50%, -50%) scale(1)';
+                trail.style.opacity = '0.4';
+                trail.style.transition = 'opacity 0.2s, transform 0.2s';
+                document.body.appendChild(trail);
+
+                requestAnimationFrame(() => {
+                    trail.style.opacity = '0';
+                    trail.style.transform = 'translate(-50%, -50%) scale(2)';
+                });
+
+                setTimeout(() => trail.remove(), 200);
+            });
+
+            function loopCursor() {
+                ringX += (cursorX - ringX) * 0.15;
+                ringY += (cursorY - ringY) * 0.15;
+                if (cursorRing) {
+                    cursorRing.style.left = ringX + 'px';
+                    cursorRing.style.top = ringY + 'px';
+                }
+                requestAnimationFrame(loopCursor);
+            }
+            loopCursor();
+
+            const interactables = document.querySelectorAll('a, button, .project-card');
+            interactables.forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+            document.addEventListener('mousedown', () => document.body.classList.add('cursor-down'));
+            document.addEventListener('mouseup', () => document.body.classList.remove('cursor-down'));
+        }
+
+        // Nav Scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // 3D Scene
+        let scene, camera, renderer, skullGroup, gunGroup, particles, bloodParticles = [], skullLight, ambientLight;
+        let skullTargetPos = new THREE.Vector3(0, 0, 0);
+        let skullTargetScale = new THREE.Vector3(1.2, 1.2, 1.2);
+        let gunTargetPos = new THREE.Vector3(3.5, -1, -3);
+        let gunTargetRotY = 0;
+        let gunTargetRotZ = 0;
+        let particlesTargetOpacity = 0.4;
+        let bloodTargetOpacity = 0;
+        let cameraTargetZ = 5;
+        let ambientTargetInt = 0.3;
+        let skullLightActive = false;
+        let velArray = [];
+        let mouseX = 0, mouseY = 0;
+        let lastScrollY = window.scrollY;
+
+        if (!isMobile) {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x000000);
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg'), antialias: true, alpha: true, powerPreference: "high-performance" });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(5, 5, 2);
+            scene.add(dirLight);
+
+            const pointLight = new THREE.PointLight(0x8B0000, 0.4);
+            pointLight.position.set(-5, 0, 2);
+            scene.add(pointLight);
+
+            // Skull
+            skullGroup = new THREE.Group();
+            const craniumGeo = new THREE.SphereGeometry(1.2, 8, 6);
+            craniumGeo.scale(1, 0.85, 1);
+            const skullMat = new THREE.MeshStandardMaterial({ color: 0xE8E0D0, roughness: 0.8, metalness: 0.1 });
+            const cranium = new THREE.Mesh(craniumGeo, skullMat);
+            skullGroup.add(cranium);
+
+            const jawGeo = new THREE.BoxGeometry(1.4, 0.5, 0.9);
+            const jaw = new THREE.Mesh(jawGeo, skullMat);
+            jaw.position.set(0, -0.8, 0.2);
+            skullGroup.add(jaw);
+
+            const eyeGeo = new THREE.SphereGeometry(0.28, 6, 6);
+            const eyeMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const eyeL = new THREE.Mesh(eyeGeo, eyeMat);
+            eyeL.position.set(-0.4, -0.1, 1.05);
+            const eyeR = new THREE.Mesh(eyeGeo, eyeMat);
+            eyeR.position.set(0.4, -0.1, 1.05);
+            skullGroup.add(eyeL, eyeR);
+
+            const noseGeo = new THREE.BoxGeometry(0.1, 0.2, 0.1);
+            const nose = new THREE.Mesh(noseGeo, eyeMat);
+            nose.position.set(0, -0.4, 1.15);
+            skullGroup.add(nose);
+
+            skullLight = new THREE.PointLight(0x8B0000, 0, 3);
+            skullLight.position.set(0, -0.1, 0.8);
+            skullGroup.add(skullLight);
+
+            skullGroup.position.set(0, 0, 0);
+            skullGroup.scale.set(1.2, 1.2, 1.2);
+            scene.add(skullGroup);
+
+            // Gun
+            gunGroup = new THREE.Group();
+            const gunMat = new THREE.MeshStandardMaterial({ color: 0x1C1C1C, roughness: 0.4, metalness: 0.8 });
+
+            const barrelGeo = new THREE.CylinderGeometry(0.06, 0.06, 1.2, 8);
+            const barrel = new THREE.Mesh(barrelGeo, gunMat);
+            barrel.rotation.z = Math.PI / 2;
+            barrel.position.set(0.6, 0, 0);
+            gunGroup.add(barrel);
+
+            const chamberGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.35, 10);
+            const chamber = new THREE.Mesh(chamberGeo, gunMat);
+            chamber.rotation.x = Math.PI / 2;
+            chamber.position.set(0, 0, 0);
+            gunGroup.add(chamber);
+
+            const handleGeo = new THREE.BoxGeometry(0.18, 0.55, 0.12);
+            const handle = new THREE.Mesh(handleGeo, gunMat);
+            handle.position.set(-0.2, -0.3, 0);
+            handle.rotation.z = -Math.PI / 8;
+            gunGroup.add(handle);
+
+            const triggerGeo = new THREE.TorusGeometry(0.1, 0.02, 4, 12, Math.PI);
+            const trigger = new THREE.Mesh(triggerGeo, gunMat);
+            trigger.rotation.z = -Math.PI / 2;
+            trigger.position.set(0.1, -0.2, 0);
+            gunGroup.add(trigger);
+
+            gunGroup.position.set(2.8, -0.4, -0.5);
+            gunGroup.scale.set(1.5, 1.5, 1.5);
+            gunGroup.rotation.y = -0.3;
+            gunGroup.rotation.z = -0.2;
+            scene.add(gunGroup);
+
+            // Particles
+            const partsGeo = new THREE.BufferGeometry();
+            const partsCount = 300;
+            const posArray = new Float32Array(partsCount * 3);
+            for (let i = 0; i < partsCount * 3; i += 3) {
+                posArray[i] = (Math.random() - 0.5) * 16;
+                posArray[i + 1] = (Math.random() - 0.5) * 10;
+                posArray[i + 2] = (Math.random() - 0.5) * 8 - 2;
+                velArray.push({
+                    x: (Math.random() - 0.5) * 0.005,
+                    y: (Math.random() - 0.5) * 0.005,
+                    z: (Math.random() - 0.5) * 0.005
+                });
+            }
+            partsGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const partsMat = new THREE.PointsMaterial({ color: 0xFFFFFF, size: 0.025, transparent: true, opacity: 0.4 });
+            particles = new THREE.Points(partsGeo, partsMat);
+            scene.add(particles);
+
+            // Blood
+            const bloodGeo = new THREE.SphereGeometry(0.02, 4, 4);
+            bloodGeo.scale(1, 4, 1);
+            const bloodMat = new THREE.MeshStandardMaterial({ color: 0x8B0000, emissive: 0x4A0000, emissiveIntensity: 0.5, transparent: true, opacity: 0 });
+
+            for (let i = 0; i < 40; i++) {
+                const drop = new THREE.Mesh(bloodGeo, bloodMat);
+                drop.position.set((Math.random() - 0.5) * 12, Math.random() * 3 + 5, (Math.random() - 0.5) * 2);
+                bloodParticles.push({ mesh: drop, speed: 0.01 + Math.random() * 0.015 });
+                scene.add(drop);
+            }
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            const clock = new THREE.Clock();
+
+            function animate() {
+                requestAnimationFrame(animate);
+                const time = clock.getElapsedTime();
+
+                // Parallax
+                const targetX = mouseX * 0.3;
+                const targetY = mouseY * 0.3;
+
+                skullGroup.position.x += (skullTargetPos.x + targetX - skullGroup.position.x) * 0.05;
+                skullGroup.position.y += (skullTargetPos.y + targetY - skullGroup.position.y) * 0.05;
+                skullGroup.position.z += (skullTargetPos.z - skullGroup.position.z) * 0.05;
+                skullGroup.scale.lerp(skullTargetScale, 0.05);
+                skullGroup.rotation.y += 0.003;
+
+                gunGroup.position.lerp(gunTargetPos, 0.05);
+                gunGroup.rotation.y = Math.sin(time * 0.5) * 0.15 + gunTargetRotY;
+                gunGroup.rotation.z = gunTargetRotZ;
+
+                if (skullLightActive) skullLight.intensity = Math.sin(time * 2) * 0.3 + 0.4;
+                else skullLight.intensity = 0;
+
+                const scrollDelta = window.scrollY - lastScrollY;
+                const pDepth = scrollDelta * 0.002;
+
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < positions.length; i += 3) {
+                    positions[i] += velArray[i / 3].x;
+                    positions[i + 1] += velArray[i / 3].y;
+                    positions[i + 2] += velArray[i / 3].z - pDepth;
+
+                    if (positions[i] > 8) positions[i] = -8;
+                    if (positions[i] < -8) positions[i] = 8;
+                    if (positions[i + 1] > 5) positions[i + 1] = -5;
+                    if (positions[i + 1] < -5) positions[i + 1] = 5;
+                    if (positions[i + 2] < -6) positions[i + 2] = 2;
+                    if (positions[i + 2] > 2) positions[i + 2] = -6;
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+                particles.material.opacity = THREE.MathUtils.lerp(particles.material.opacity, particlesTargetOpacity, 0.05);
+
+                bloodParticles.forEach(p => {
+                    p.mesh.position.y -= p.speed;
+                    if (p.mesh.position.y < -6) p.mesh.position.y = 8;
+                    p.mesh.material.opacity = THREE.MathUtils.lerp(p.mesh.material.opacity, bloodTargetOpacity, 0.05);
+                });
+
+                camera.position.z = THREE.MathUtils.lerp(camera.position.z, cameraTargetZ, 0.05);
+                ambientLight.intensity = THREE.MathUtils.lerp(ambientLight.intensity, ambientTargetInt, 0.05);
+
+                lastScrollY = window.scrollY;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // Scroll States
+        window.addEventListener('scroll', () => {
+            if (isMobile) return;
+            const scrollHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = Math.max(0, Math.min(1, window.scrollY / scrollHeight));
+
+            if (progress < 0.14) {
+                skullTargetPos.set(0, 0, 0); skullTargetScale.set(1.2, 1.2, 1.2);
+                gunTargetPos.set(2.8, -0.4, -0.5); gunTargetRotY = -0.3;
+                particlesTargetOpacity = 0.4; bloodTargetOpacity = 0;
+                cameraTargetZ = 5; ambientTargetInt = 0.3; skullLightActive = false;
+            } else if (progress < 0.28) {
+                skullTargetPos.set(-2.5, 0.5, -1); skullTargetScale.set(0.8, 0.8, 0.8);
+                gunTargetPos.set(2, 0, -1.5); gunTargetRotY = -Math.PI / 4;
+                particlesTargetOpacity = 0.6; cameraTargetZ = 5.5; ambientTargetInt = 0.3;
+            } else if (progress < 0.42) {
+                skullTargetPos.set(-3, -0.5, -2);
+                gunTargetPos.set(1.5, 0, -0.5); gunTargetRotY = -Math.PI / 2;
+                particlesTargetOpacity = 0.8; cameraTargetZ = 6; ambientTargetInt = 0.3;
+            } else if (progress < 0.56) {
+                skullTargetPos.set(-2, -2, -4);
+                gunTargetPos.set(2.5, 1, -3);
+                particlesTargetOpacity = 0.3; cameraTargetZ = 6.5; ambientTargetInt = 0.1;
+                bloodTargetOpacity = 0; skullLightActive = false;
+            } else if (progress < 0.72) {
+                skullTargetPos.set(0.5, 0, -1); skullTargetScale.set(1.0, 1.0, 1.0);
+                gunTargetPos.set(-2, -0.5, -2);
+                particlesTargetOpacity = 0.9; cameraTargetZ = 6.5; ambientTargetInt = 0.3;
+                bloodTargetOpacity = 1; skullLightActive = true;
+            } else if (progress < 0.88) {
+                skullTargetPos.set(3, 1, -4); skullTargetScale.set(0.6, 0.6, 0.6);
+                gunTargetPos.set(0, 0, 1.5); gunTargetRotY = Math.PI / 8;
+                cameraTargetZ = 4.5; bloodTargetOpacity = 1; skullLightActive = true;
+            } else {
+                skullTargetPos.set(0, 0, -6); gunTargetPos.set(0, 0, -6);
+                cameraTargetZ = 5; ambientTargetInt = 0; bloodTargetOpacity = 0;
+                particlesTargetOpacity = 0.1; skullLightActive = false;
+            }
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Split text
+        document.querySelectorAll('.split-words').forEach(el => {
+            const words = el.innerText.split(' ');
+            el.innerHTML = '';
+            words.forEach(w => {
+                const span = document.createElement('span');
+                span.innerText = w;
+                span.style.opacity = '0';
+                span.style.display = 'inline';
+                span.style.marginRight = '0.25em';
+                el.appendChild(span);
+            });
+        });
+
+        if (!isMobile) {
+            ScrollTrigger.create({
+                trigger: "#hero", start: "top top", end: "+=150%",
+                pin: true, pinSpacing: true
+            });
+
+            // Hero Load
+            gsap.fromTo('.hero-title .char', { y: -100, opacity: 0 }, {
+                y: 0, opacity: 1, stagger: 0.1, duration: 1, ease: "power4.out", onComplete: () => {
+                    gsap.to('.hero-title', { opacity: 0.2, duration: 0.05, yoyo: true, repeat: 3, delay: 0.2 });
+                }
+            });
+
+            // Sections Fade In
+            const sections = document.querySelectorAll('.section:not(#hero)');
+            sections.forEach(sec => {
+                const targets = sec.querySelectorAll('.section-title, .about-stats, .skill-card, .intern-header, .intern-desc, .intern-stack, .achieve-secondary, .footer-title, .footer-links');
+                if (targets.length) {
+                    gsap.from(targets, {
+                        scrollTrigger: { trigger: sec, start: "top 80%", end: "top 20%", scrub: 1.5 },
+                        y: 80, opacity: 0, stagger: 0.1
+                    });
+                }
+            });
+
+            // About Words Reveal
+            gsap.to('.split-words span', {
+                scrollTrigger: { trigger: "#about", start: "top 70%", end: "top 20%", scrub: 1.5 },
+                opacity: 1, stagger: 0.1
+            });
+
+            // Stats
+            document.querySelectorAll('.stat-num').forEach(stat => {
+                let text = stat.innerText;
+                let isFloat = text.includes('.');
+                let isPercent = text.includes('%');
+                let num = parseFloat(text);
+
+                gsap.fromTo(stat, { innerHTML: 0 }, {
+                    innerHTML: num, duration: 2, snap: { innerHTML: isFloat ? 0.1 : 1 },
+                    scrollTrigger: { trigger: "#about", start: "top 60%", once: true },
+                    onUpdate: function () {
+                        if (isPercent) stat.innerHTML = Math.round(this.targets()[0].innerHTML) + '%';
+                    }
+                });
+            });
+
+            // Glitch Line
+            ScrollTrigger.create({
+                trigger: "#internship", start: "top 60%", once: true,
+                onEnter: () => document.querySelector('.glitch-line').classList.add('glitch-anim')
+            });
+
+            // Projects
+            document.querySelectorAll('.project-card').forEach((card, i) => {
+                let xOffset = i % 2 === 0 ? -120 : 120;
+                gsap.from(card, {
+                    scrollTrigger: { trigger: card, start: "top 85%", end: "top 40%", scrub: 1.5 },
+                    x: xOffset, opacity: 0
+                });
+                gsap.to(card.querySelector('.card-border'), {
+                    scrollTrigger: { trigger: card, start: "top 85%", end: "top 40%", scrub: 1.5 },
+                    width: "100%"
+                });
+            });
+
+            // Achievements
+            gsap.from('.achieve-winner', {
+                scrollTrigger: { trigger: "#achievements", start: "top 80%", end: "top 30%", scrub: 1.5 },
+                y: -200, opacity: 0
+            });
+            ScrollTrigger.create({
+                trigger: "#achievements", start: "top 60%", once: true,
+                onEnter: () => gsap.to('.diamond', { x: 5, color: '#8B0000', duration: 0.05, yoyo: true, repeat: 5, onComplete: () => gsap.set('.diamond', { color: '#F5F5F5', x: 0 }) })
+            });
+
+        } else {
+            // Mobile basic animations
+            gsap.fromTo('.hero-title .char', { y: -50, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 1 });
+            document.querySelectorAll('.section:not(#hero)').forEach(sec => {
+                gsap.from(sec.children, {
+                    scrollTrigger: { trigger: sec, start: "top 85%", once: true },
+                    y: 30, opacity: 0, stagger: 0.1, duration: 0.8
+                });
+            });
+            document.querySelectorAll('.split-words span').forEach(s => s.style.opacity = 1);
+        }
+
+    </script>
+</body>
+
+</html>
